@@ -1,1 +1,3 @@
 ### write Requests here to test
+
+GET http://localhost:3001/apartment

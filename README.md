@@ -2,6 +2,10 @@ Backend for the e-commerce module 8 in Hyper Island.
 1. Run: npm install
 2. Run: npm run dev
 
+TO GET ACCESS TO DB
+    Login to mongodb-atlas and allow your IP adress access under
+    SECURITY/NETWORK ACESS
+
 Structure is setup as following:
 FILES:
 - server.js is the main source

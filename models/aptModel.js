@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 
+// THIS IS A SCHEMA FOR POSTING
 const aptSchema = mongoose.Schema({
     aptNumber: {
         type: String,
@@ -13,6 +14,7 @@ const aptSchema = mongoose.Schema({
         type: Boolean,
         required: [true, "no for sale value"]
     },
+    // CAN CHANGE TO INT?
     price: {
         type: String,
         required: [true, "no price"]
@@ -29,4 +31,4 @@ const aptSchema = mongoose.Schema({
     timestamps: true,
 })
 
-module.exports = mongoose.model("Apartments", aptSchema)
+module.exports = mongoose.model("apartments", aptSchema)

@@ -5,11 +5,12 @@ const asyncHandler = require("express-async-handler");
 // WHENEVER YOU HAVE UserForm."SOMETHING"
 // THAT CALLS A MONGOOSE FUNCTION
 const UserForm = require("../models/userFormModel");
+const { getMaxListeners } = require("../models/userFormModel");
 
 // @desc       Register new user
 // @route       POST /users
 // @access      Public
-const registerUser = async (req, res) => {
+const registerUser = asyncHandler(async (req, res) => {
     // DECONSTRUCTING THE REQUEST BODY
     const { username, email, password } = req.body;
 
@@ -23,8 +24,9 @@ const registerUser = async (req, res) => {
     }
 
     // SEE IF USER ALREADY HAS AN ACCOUNT
-    const userExists = await UserForm.findOne({email})
-    if(userExists) {
+    const userNameExists = await UserForm.findOne({username})
+    const emailExists = await UserForm.findOne({email})
+    if(userNameExists || emailExists) {
         res.status(400);
         throw new Error("User already exists");
     }
@@ -56,7 +58,38 @@ const registerUser = async (req, res) => {
     res.json({message: "User registerd!"});
 
 
-}
+})
+
+// @desc       Login user
+// @route       POST /users/login
+// @access      Public
+const loginUser = asyncHandler(async (req, res) => {
+    // DECONSTRUCTING THE REQ BODY
+    const {username, password} = req.body;
+    console.log(req.body)
+
+    // SEEING IF THE USER EXISTS BASED ON USERNAME
+    let user;
+    try {
+        user = await UserForm.findOne({username});
+    } catch (error) {
+        console.log(error);
+    }
+
+    // COMPARE PASSWORD AND SEE IF IT IS CORRECT
+    if(user && (await bcrypt.compare(password, user.password))) {
+        res.json({
+            username: user.username,
+            // FOR THE FUTURE ADD APARTMENTS
+            // ALSO WALLET
+            token: generateToken(user._id)
+        })
+    } else {
+        res.status(400)
+        throw new Error("Invalid login")
+    }
+
+})
 
 // GENERATE TOKEN
 const generateToken = (id) => {
@@ -67,5 +100,6 @@ const generateToken = (id) => {
 }
 
 module.exports = {
-    registerUser
+    registerUser,
+    loginUser
 }

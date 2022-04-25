@@ -3,30 +3,33 @@ const mongoose = require("mongoose");
 // THIS IS A SCHEMA FOR POSTING
 const aptSchema = mongoose.Schema({
     aptNumber: {
-        type: String,
+        type: Number,
         required: [true, "no apartment number"]
     },
     aptImage: {
         type: String,
         required: [true, "no image"]
     },
-    forsale: {
-        type: Boolean,
-        required: [true, "no for sale value"]
-    },
-    // CAN CHANGE TO INT?
     price: {
-        type: String,
+        type: Number,
         required: [true, "no price"]
-    },
-    ownerId: {
-        type: String,
-        required: [true, "no owner id"]
     },
     ownerName: {
         type: String,
         required: [true, "no owner name"]
     },
+    tier: {
+        type: String,
+        required: [true, "no tier description"]
+    },
+    view: {
+        type: String,
+        required: [true, "no view description"]
+    },
+    info: {
+        type: String,
+        required: [true, "no info set"]
+    }
 }, {
     timestamps: true,
 })

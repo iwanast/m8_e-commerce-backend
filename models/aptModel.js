@@ -29,7 +29,11 @@ const aptSchema = mongoose.Schema({
     info: {
         type: String,
         required: [true, "no info set"]
-    }
+    },
+    posters: [{
+        type: String,
+        required: false,
+    }]
 }, {
     timestamps: true,
 })
